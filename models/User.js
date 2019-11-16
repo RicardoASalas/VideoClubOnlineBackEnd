@@ -1,8 +1,10 @@
 const mongoose=require('mongoose');
 
+objectId=mongoose.Schema.ObjectId
 const UserSchema=mongoose.Schema({
-    token: String,
-    
+
+    token: objectId,
+
     username:{
         type: String,
         unique: true,

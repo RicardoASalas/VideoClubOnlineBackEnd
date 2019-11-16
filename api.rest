@@ -14,7 +14,7 @@ GET http://localhost:3001/movie/title/vengadores
 
 ###
 
-GET http://localhost:3001/movie/genre/accion
+GET http://localhost:3001/movie/genre/action
 
 
 ########################################################
@@ -27,16 +27,18 @@ POST http://localhost:3001/user/register
 Content-Type: application/json
 
 {
-    "username": "antonio",
+    "username": "pepe",
     "password":"10234"
 }
 
-GET http://localhost:3001/user/login
+###
+
+POST http://localhost:3001/user/login
 Content-Type: application/json
 
 {
-    "username": "antonio",
-    "password":"10234"
+    "username": "juan",
+    "password":"10233"
 }
 
 

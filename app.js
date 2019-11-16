@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const MovieModel = require('./models/Movie');
 const GenreModel = require('./models/Genre');
 const UserModel = require('./models/User');
+const TokenModel = require('./models/token');
 
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
@@ -37,26 +38,24 @@ app.get("/movie", (req, res) => {
 
 })
  ////////////////////////MOVIE//////////////////////////////
+
+ //endpoint que consulta a la base de datos y busca peliculas por id
 app.get("/movie/id/:id", (req, res) => {
     let id = req.params.id;
-    console.log(id)
+
     MovieModel.findById(id, (err, movie) => {
         if (err) {
-            console.log("ha habido un error")
-            return res.status(500).send({
-                mesaje: err
-            })
+            return res.send("Ha habido un error: "+err)
         }
         if (!id) {
-            console.log("no lo encuentra")
-            return res.status(500).send({
-                mesaje: "movie doesn't exist"
-            })
+        
+            return res.send("No existe ninguna pelicula con ese id")
         }
-        console.log("la pelicula es" + movie)
         res.send(movie)
     })
 })
+
+//endpoint de busqueda de peliculas por medio del tìtulo
 app.get("/movie/title/:title", (req, res) => {
 
     let title = new RegExp(req.params.title, "i");
@@ -65,78 +64,58 @@ app.get("/movie/title/:title", (req, res) => {
         title: title
     }, (err, movie) => {
         if (err) {
-            console.log("ha habido un error " + err)
-            return res.status(500).send({
-                mesaje: err
-            })
+
+            return res.send("Ha habido un error: "+err)
         }
         if (!title) {
-            console.log("no lo encuentra")
-            return res.status(500).send({
-                mesaje: "movie doesn't exist"
-            })
+
+            return res.send("No se encuentra ninguna pelìcula con ese nombre.")
         }
-        console.log("la pelicula es" + movie)
         res.send(movie)
     })
 })
-//Consultas a la base de datos para filtrar por genero
+//endpoint que consulta a la base de datos para filtrar por genero mediante un
+//regex generado a partir del genero introducido en el body
+//y la bandera i para ignorar mayúsculas
 app.get("/movie/genre/:genre", (req, res) => {
 
     genre = new RegExp(req.params.genre, "i")
 
     GenreModel.find({
         name: genre
-    }, (err, docs) => {
+    }, (err, movie) => {
         if (err) {
-            console.log("ha habido un error " + err)
-            return res.status(500).send({
-                mesaje: err
-            })
+            
+            return res.send("Ha habido un error al guardar los datos: "+err)
         }
         if (!genre) {
-            console.log("no lo encuentra")
-            return res.status(500).send({
-                mesaje: "genre doesn't exist"
-            })
+            
+            return res.send("El genero introducido no es valido.")
 
         }
-        //se recorre la coleccion de objetos genero y se almacena el id del genero que cuyo campo 
-        //nombre coincida con el parametro pasado al controlador get
-        let movieGenre = docs
-        console.log(movieGenre)
-        // for (let i = 0; i < movieGenre.length; i++) {
-        //     console.log(movieGenre[i].id)
-
-        //     if (movieGenre[i].name == genre) {
-
-        //         var genreId = movieGenre[i].id
-        //         console.log(genreId)
-        //     }
-        // }
-        console.log('1 '+movieGenre)
-        const movieGenreId=parseInt(movieGenre[0].id)
+        
+        movieGenre = movie
+        movieGenreId=parseInt(movieGenre[0].id)
         
         MovieModel.find({
             genre_ids: movieGenreId
         }, (err, movie) => {
-            console.log('2 '+movieGenreId)
             if(err){
-                console.log("la has cagado "+ err)
+                return res.send("Ha habido un error en la busqueda: "+ err)
             }
             if(!movieGenreId){
                
-                console.log("hola")
                 
-                return console.log("No existe ningun genero con ese id")
+                return res.send("No existe ningun genero con ese id")
             }
-            console.log(movie)
             res.send(movie)
         })
 
     })
 })
  ////////////////////////USER//////////////////////////////
+
+ //end point para registrarse y crear usuarios en la base de datos
 app.post('/user/register',(req,res) =>{
   
     let newUser = new UserModel()
@@ -145,14 +124,42 @@ app.post('/user/register',(req,res) =>{
         
         newUser.save((err,userSaved)=>{
             if(err){
-                console.log("Ha habido un error al guardar los datos")
-                return res.send(err)
+
+                return res.send("Ha habido un error al guardar los datos: "+err)
             }
-            res.send(userSaved)
-            console.log(userSaved + " ha sido guardado correctamente")
+            res.send(userSaved+ " ha sido guardado correctamente")
+
         })
         
     })
+
+//End point para logearse con un usuario y contraseña. en caso 
+//el usuario y contraseña existan y sean validos creara un token
+//para ese usuario.
+app.post('/user/login', (req, res)=>{
+    userExist = req.body.username;
+    passwordIsValid = req.body.password;
+    
+    UserModel.find({username: userExist}, (err, userValid)=>{
+        if (err){
+            return res.send("Error. "+err)
+        }
+        if(!userValid.length){
+            return res.send("el usuario no existe")
+        }
+        if(userValid[0].password !==passwordIsValid){
+            return res.send("la contraseña no es correcta")
+        }
+        
+        token = new TokenModel()
+        token.userId = userValid[0]._id;
+        token.save()
+        res.send("login realizado con exito")
+        
+    })
+    
+})
+
     
 
 
