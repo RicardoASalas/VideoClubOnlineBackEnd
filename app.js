@@ -5,6 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const MovieModel = require('./models/Movie');
 const GenreModel = require('./models/Genre');
+const UserModel = require('./models/User');
 
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
@@ -35,7 +36,7 @@ app.get("/movie", (req, res) => {
         .catch(error => console.log(error))
 
 })
-
+ ////////////////////////MOVIE//////////////////////////////
 app.get("/movie/id/:id", (req, res) => {
     let id = req.params.id;
     console.log(id)
@@ -79,11 +80,10 @@ app.get("/movie/title/:title", (req, res) => {
         res.send(movie)
     })
 })
-
+//Consultas a la base de datos para filtrar por genero
 app.get("/movie/genre/:genre", (req, res) => {
 
     genre = new RegExp(req.params.genre, "i")
-    genreId = ""
 
     GenreModel.find({
         name: genre
@@ -101,27 +101,62 @@ app.get("/movie/genre/:genre", (req, res) => {
             })
 
         }
-
+        //se recorre la coleccion de objetos genero y se almacena el id del genero que cuyo campo 
+        //nombre coincida con el parametro pasado al controlador get
         let movieGenre = docs
         console.log(movieGenre)
-        for (let i = 0; i < movieGenre.length; i++) {
-            console.log(movieGenre[i].id)
+        // for (let i = 0; i < movieGenre.length; i++) {
+        //     console.log(movieGenre[i].id)
 
-            if (movieGenre[i].name == genre) {
+        //     if (movieGenre[i].name == genre) {
 
-                genreId = movieGenre[i].id
-                console.log(genreId)
-            }
-        }
-
+        //         var genreId = movieGenre[i].id
+        //         console.log(genreId)
+        //     }
+        // }
+        console.log('1 '+movieGenre)
+        const movieGenreId=parseInt(movieGenre[0].id)
+        
         MovieModel.find({
-            genre_ids: 28
+            genre_ids: movieGenreId
         }, (err, movie) => {
+            console.log('2 '+movieGenreId)
+            if(err){
+                console.log("la has cagado "+ err)
+            }
+            if(!movieGenreId){
+               
+                console.log("hola")
+                
+                return console.log("No existe ningun genero con ese id")
+            }
+            console.log(movie)
             res.send(movie)
         })
 
     })
 })
+ ////////////////////////USER//////////////////////////////
+app.post('/user/register',(req,res) =>{
+  
+    let newUser = new UserModel()
+            newUser.username = req.body.username,
+            newUser.password = req.body.password
+        
+        newUser.save((err,userSaved)=>{
+            if(err){
+                console.log("Ha habido un error al guardar los datos")
+                return res.send(err)
+            }
+            res.send(userSaved)
+            console.log(userSaved + " ha sido guardado correctamente")
+        })
+        
+    })
+    
+
+
+   
 
 app.listen(3001, () => console.log("Servidor levantado en el puerto 3001"));
 

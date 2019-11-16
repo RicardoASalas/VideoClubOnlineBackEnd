@@ -1,4 +1,6 @@
-###
+########################################################
+#                    endpoints peliculas               #
+########################################################
 GET http://localhost:3001/movie
 
 
@@ -12,6 +14,29 @@ GET http://localhost:3001/movie/title/vengadores
 
 ###
 
-GET http://localhost:3001/movie/genre/acción
+GET http://localhost:3001/movie/genre/accion
+
+
+########################################################
+#                    endpoints users                   #
+########################################################
+
+
+
+POST http://localhost:3001/user/register
+Content-Type: application/json
+
+{
+    "username": "antonio",
+    "password":"10234"
+}
+
+GET http://localhost:3001/user/login
+Content-Type: application/json
+
+{
+    "username": "antonio",
+    "password":"10234"
+}
 
 
