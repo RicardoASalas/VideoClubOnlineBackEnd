@@ -10,4 +10,8 @@ GET http://localhost:3001/movie/id/5dcc325de4a8fd83e208c8c0
 
 GET http://localhost:3001/movie/title/vengadores
 
+###
+
+GET http://localhost:3001/movie/genre/acción
+
 
