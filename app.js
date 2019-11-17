@@ -31,10 +31,11 @@ mongoose.connect("/mongodb://localhost:27017/VideoClubOnline", {
     .then(() => console.log('conectado a mongodb'))
     .catch((error) => console.log('Error al conectar a MongoDB ' + error));
 
+//endpoint que saca una relacion de todas las peliculas de la base de datos
 app.get("/movie", (req, res) => {
     MovieModel.find({})
         .then(movies => res.send(movies))
-        .catch(error => console.log(error))
+        .catch(error => res.send(error))
 
 })
  ////////////////////////MOVIE//////////////////////////////
@@ -119,13 +120,15 @@ app.get("/movie/genre/:genre", (req, res) => {
 app.post('/user/register',(req,res) =>{
   
     let newUser = new UserModel()
-            newUser.username = req.body.username,
+    
+            newUser.username = req.body.username
             newUser.password = req.body.password
+            newUser.login = false
         
         newUser.save((err,userSaved)=>{
             if(err){
 
-                return res.send("Ha habido un error al guardar los datos: "+err)
+                return res.send("El usuario introducido ya existe")
             }
             res.send(userSaved+ " ha sido guardado correctamente")
 
@@ -140,24 +143,60 @@ app.post('/user/login', (req, res)=>{
     userExist = req.body.username;
     passwordIsValid = req.body.password;
     
-    UserModel.find({username: userExist}, (err, userValid)=>{
+    UserModel.find({username: userExist}, (err, validUser)=>{
         if (err){
             return res.send("Error. "+err)
         }
-        if(!userValid.length){
-            return res.send("el usuario no existe")
+        if(!validUser.length){
+            return res.send("El usuario introducido no existe")
         }
-        if(userValid[0].password !==passwordIsValid){
-            return res.send("la contraseña no es correcta")
+        if(validUser[0].password !==passwordIsValid){
+            return res.send("La contraseña introducida no es correcta")
+        }
+    
+        if(validUser[0].login ){
+
+            return res.send("Este usuario ya esta logeado.")
         }
         
         token = new TokenModel()
-        token.userId = userValid[0]._id;
+        token.userId = validUser[0]._id
         token.save()
-        res.send("login realizado con exito")
+        validUser[0].token=token._id
+        validUser[0].login=true
+        validUser[0].save()
+
+        
+        console.log(validUser[0])
+        
+        res.send("Login de "+validUser[0].username+" realizado con exito")
         
     })
     
+})
+
+//endpoint que valida el token y permite visualizar el perfil
+app.get('/user/profile',(req,res)=>{
+
+})
+
+//endpoint que realiza el log out y borra el token del usuario
+app.patch('/user/logout', (req,res)=>{
+    userExist=req.body.username
+    UserModel.find({username:validUser},(err,validUser)=>{
+        if(err){
+            return res.send("Ha habido un error: "+err)
+        }
+        if(!validUser.length){
+            return res.send("El usuario no existe.")
+        }
+        if(!validUser[0].token){
+            return res.send("Este usuario no esta logeado.")
+        }
+        userToken=validUser[0].token
+        TokenModel.findByIdAndDelete(userToken)
+    })
+
 })
 
     

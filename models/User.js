@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 
 objectId=mongoose.Schema.ObjectId
 const UserSchema=mongoose.Schema({
-
+    
     token: objectId,
 
     username:{
@@ -14,7 +14,10 @@ const UserSchema=mongoose.Schema({
     password:{
         type: String,
         require: true
-    }
+    },
+
+    login: Boolean
+
 })
 
 const UserModel = mongoose.model('user', UserSchema);
