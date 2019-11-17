@@ -34,7 +34,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:3001/user/login
+PATCH http://localhost:3001/user/login
 Content-Type: application/json
 
 {
@@ -45,13 +45,25 @@ Content-Type: application/json
 ###
 
 PATCH http://localhost:3001/user/logout
-
 Content-Type: application/json
 
 {
-    "username": "pepe",
+    "username": "manuel",
     "password":"10234"
 }
+
+###
+
+GET http://localhost:3001/user/profile
+Authorization: 5dd17524044a18434819076a
+Content-Type: application/json
+
+{
+    "username": "manuel",
+    "password":"10234"
+}
+
+
 
 
 

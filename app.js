@@ -7,6 +7,7 @@ const MovieModel = require('./models/Movie');
 const GenreModel = require('./models/Genre');
 const UserModel = require('./models/User');
 const TokenModel = require('./models/token');
+const authorization = require('./middlewares/authorization')
 
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
@@ -139,7 +140,7 @@ app.post('/user/register',(req,res) =>{
 //End point para logearse con un usuario y contraseña. en caso 
 //el usuario y contraseña existan y sean validos creara un token
 //para ese usuario.
-app.post('/user/login', (req, res)=>{
+app.patch('/user/login', (req, res)=>{
     userExist = req.body.username;
     passwordIsValid = req.body.password;
     
@@ -165,36 +166,49 @@ app.post('/user/login', (req, res)=>{
         validUser[0].token=token._id
         validUser[0].login=true
         validUser[0].save()
-
-        
-        console.log(validUser[0])
-        
-        res.send("Login de "+validUser[0].username+" realizado con exito")
+        respuestaToken = validUser[0].token.toString() 
+        res.send("Login de "+validUser[0].username+" realizado con exito. TOKEN: "+respuestaToken)
         
     })
     
 })
 
 //endpoint que valida el token y permite visualizar el perfil
-app.get('/user/profile',(req,res)=>{
+app.get('/user/profile',authorization,(req,res)=>{
+        
+        res.send('El token introducido es Valido. Tienes permiso de acceso')
 
 })
 
 //endpoint que realiza el log out y borra el token del usuario
 app.patch('/user/logout', (req,res)=>{
-    userExist=req.body.username
-    UserModel.find({username:validUser},(err,validUser)=>{
+    userExist = req.body.username 
+    UserModel.find({username:userExist},(err,validUser)=>{
         if(err){
+            console.log("ha habido un error")
             return res.send("Ha habido un error: "+err)
         }
         if(!validUser.length){
+            console.log(validUser)
             return res.send("El usuario no existe.")
         }
-        if(!validUser[0].token){
+        if(!validUser[0].login){
             return res.send("Este usuario no esta logeado.")
         }
         userToken=validUser[0].token
-        TokenModel.findByIdAndDelete(userToken)
+        validUser[0].login = false
+        validUser[0].token = null 
+        validUser[0].save()
+        console.log(userToken)
+        TokenModel.findByIdAndDelete(userToken,(err,tokenRemoved)=>{
+            if(err){
+                return res.send('Ha habido un error'+err)
+            }
+            tokenRemoved.remove();
+        })
+        
+        
+        res.send('El usuario se ha deslogeado con exito')
     })
 
 })
