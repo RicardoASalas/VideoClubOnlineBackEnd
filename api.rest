@@ -1,5 +1,5 @@
 ########################################################
-#                    endpoints peliculas               #
+#                    endPoints peliculas               #
 ########################################################
 GET http://localhost:3001/movie
 
@@ -18,7 +18,7 @@ GET http://localhost:3001/movie/genre/action
 
 
 ########################################################
-#                    endpoints users                   #
+#                    endPoints users                   #
 ########################################################
 
 
@@ -55,13 +55,24 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3001/user/profile
-Authorization: 5dd17524044a18434819076a
+Authorization: 5dd2bc17e071f501bc70e2c1
+
+
+########################################################
+#                    endPoints pedidos                 #
+########################################################
+
+
+post http://localhost:3001/user/profile/order
+Authorization: 5dd2bc17e071f501bc70e2c1
 Content-Type: application/json
 
 {
-    "username": "manuel",
-    "password":"10234"
+    "title": "avengers"
 }
+
+
+
 
 
 

@@ -16,7 +16,15 @@ const UserSchema=mongoose.Schema({
         require: true
     },
 
-    login: Boolean
+    login: Boolean,
+
+    filmId: objectId,
+
+    filmRented: String,
+
+    rentingDate: String,
+
+    arrivalDate: String
 
 })
 
