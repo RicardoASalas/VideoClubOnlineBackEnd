@@ -248,7 +248,7 @@ app.post('/user/profile/order', authorization, (req, res) => {
 
         }
         if (userValid[0].filmRented !== "") {
-            res.send('El usuario ya tiene una pelicula alquilada')
+            return res.send('El usuario ya tiene una pelicula alquilada')
         }
 
         MovieModel.find({
@@ -269,12 +269,18 @@ app.post('/user/profile/order', authorization, (req, res) => {
             const tiempoTransporte = 2
             userValid[0].arrivalDate = (currentDate.getDate()+tiempoTransporte)+"/"+(currentDate.getMonth()+1)+"/"+currentDate.getFullYear()
             
-            userValid[0].save()
+            userValid[0].save((err, saved)=>{
+                if (err){
+                    return res.send('Ha habido un erro al salvar')
+                }
+                 res.send('Salvado Correctamente'+saved)
+            })
         })
 
     }).select('username filmRented rentingDate arrivalDate')
 
 })
+
 
 app.listen(3001, () => console.log("Servidor levantado en el puerto 3001"));
 
