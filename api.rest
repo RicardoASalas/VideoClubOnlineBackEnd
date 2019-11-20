@@ -1,7 +1,7 @@
 ########################################################
 #                    endPoints peliculas               #
 ########################################################
-GET http://localhost:3001/movie
+GET http://localhost:3001/movie/
 
 
 ###
@@ -10,10 +10,10 @@ GET http://localhost:3001/movie/id/5dcc325de4a8fd83e208c8c0
 
 ###
 
-GET http://localhost:3001/movie/title/laca
+GET http://localhost:3001/movie/title/avengers
 ###
 
-GET http://localhost:3001/movie/genre/comedia
+GET http://localhost:3001/movie/genre/drama
 
 
 
@@ -27,7 +27,7 @@ POST http://localhost:3001/user/register
 Content-Type: application/json
 
 {
-    "username": "andres",
+    "username": "raul",
     "password":"58412"
 }
 
@@ -55,7 +55,7 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3001/user/profile
-Authorization: 5dd5739eba955f1b48c88783
+Authorization: 5dd5a8abb3df5d3f30b4a0e5
 
 ########################################################
 #                    endPoints pedidos                 #
@@ -63,7 +63,7 @@ Authorization: 5dd5739eba955f1b48c88783
 
 
 PATCH  http://localhost:3001/user/profile/order
-Authorization: 5dd5739eba955f1b48c88783
+Authorization: 5dd5a8abb3df5d3f30b4a0e5
 Content-Type: application/json
 
 {
@@ -73,8 +73,7 @@ Content-Type: application/json
 ###
 
 PATCH http://localhost:3001/user/profile/order/cancel
-Authorization: 5dd5739eba955f1b48c88783
-
+Authorization: 5dd5a8abb3df5d3f30b4a0e5
 
 ###
 
