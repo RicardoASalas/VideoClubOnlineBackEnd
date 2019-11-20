@@ -31,36 +31,32 @@ app.get("/movie", (req, res) => {
 app.get("/movie/id/:id", (req, res) => {
     const id = req.params.id;
 
-    MovieModel.findById(id, (err, movie) => {
-        if (err) {
-            return res.send("Ha habido un error: " + err)
+    MovieModel.findById(id)
+    .then(movie=>{
+        if(!movie){
+            return res.status(400).send("No existe ninguna pelicula con ese id")
         }
-        if (!id) {
-
-            return res.send("No existe ninguna pelicula con ese id")
-        }
-        res.send(movie)
+        res.status(200).send(movie)
     })
+    .catch(err=> res.status(500).send("Ha habido un error: " + err))
 })
+
 
 //endpoint de busqueda de peliculas por medio del tìtulo
 app.get("/movie/title/:title", (req, res) => {
 
     const title = new RegExp(req.params.title, "i");
 
-    MovieModel.find({
-        title: title
-    }, (err, movie) => {
-        if (err) {
-
-            return res.send("Ha habido un error: " + err)
-        }
-        if (!title) {
-
-            return res.send("No se encuentra ninguna pelìcula con ese nombre.")
-        }
-        res.send(movie)
+    MovieModel.find({title: title})
+    .then(movie=>{
+        console.log(movie)
+         if (!movie[0]) {
+        
+             return res.status(400).send("No se encuentra ninguna pelìcula con ese nombre.")
+         }
+         res.status(200).send(movie)
     })
+    .catch(err=>res.status(500).send("Ha habido un error: " + err))
 })
 
 //endpoint que consulta a la base de datos para filtrar por genero mediante un
@@ -69,44 +65,37 @@ app.get("/movie/title/:title", (req, res) => {
 app.get("/movie/genre/:genre", (req, res) => {
 
     const genre = new RegExp(req.params.genre, "i")
+    
+    GenreModel.find({name: genre})
+    .then(gen=>{
+        if(!gen[0]){
 
-    GenreModel.find({
-        name: genre
-    }, (err, movie) => {
-        if (err) {
-
-            return res.send("Ha habido un error al guardar los datos: " + err)
+            return res.status(400).send("El genero introducido no es valido.")
         }
-        if (!genre) {
+        const movieGenre = gen[0]
 
-            return res.send("El genero introducido no es valido.")
-
-        }
-
-        movieGenre = movie
-        movieGenreId = parseInt(movieGenre[0].id)
-
-        MovieModel.find({
-            genre_ids: movieGenreId
-        }, (err, movie) => {
-            if (err) {
-                return res.send("Ha habido un error en la busqueda: " + err)
+        const movieGenreId = parseInt(movieGenre.id)
+       
+        MovieModel.find({genre_ids: movieGenreId})
+        .then(movie=>{
+            if (!movie[0]){
+                return send.status(400).send('No se han encontrado peliculas de ese genero')
             }
-            if (!movieGenreId) {
-
-
-                return res.send("No existe ningun genero con ese id")
-            }
-            res.send(movie)
+            res.status(200).send(movie)
         })
-
+        .catch(err=> res.status(500).send('Ha habido un error'+ err))    
+      
     })
+    .catch(err=> res.status(500).send('Ha habido un error '+err))
+
+       
 })
+
 ////////////////////////USER//////////////////////////////
 
 //end point para registrarse y crear usuarios en la base de datos
 app.post('/user/register', (req, res) => {
-
+   
     const newUser = new UserModel()
 
     newUser.username = req.body.username
@@ -116,12 +105,12 @@ app.post('/user/register', (req, res) => {
     newUser.rentingDate = null
     newUser.arrivalDate = null
 
-    newUser.save((err, userSaved) => {
+    newUser.save((err,userSaved) => {
         if (err) {
 
-            return res.send("El usuario introducido ya existe")
+            return res.status(400).send("El usuario introducido ya existe")
         }
-        res.send(userSaved + " ha sido guardado correctamente")
+        res.status(200).send(userSaved + " ha sido guardado correctamente")
 
     })
 
@@ -138,18 +127,18 @@ app.patch('/user/login', (req, res) => {
         username: userExist
     }, (err, validUser) => {
         if (err) {
-            return res.send("Error. " + err)
+            return res.status(500).send("Error. " + err)
         }
         if (!validUser.length) {
-            return res.send("El usuario introducido no existe")
+            return res.status(400).send("El usuario introducido no existe")
         }
         if (validUser[0].password !== passwordIsValid) {
-            return res.send("La contraseña introducida no es correcta")
+            return res.status(400).send("La contraseña introducida no es correcta")
         }
 
         if (validUser[0].login) {
 
-            return res.send("Este usuario ya esta logeado.")
+            return res.status(400).send("Este usuario ya esta logeado.")
         }
 
         token = new TokenModel()
@@ -159,7 +148,7 @@ app.patch('/user/login', (req, res) => {
         validUser[0].login = true
         validUser[0].save()
         respuestaToken = validUser[0].token.toString()
-        res.send("Login de " + validUser[0].username + " realizado con exito. TOKEN: " + respuestaToken)
+        res.status(200).send("Login de " + validUser[0].username + " realizado con exito. TOKEN: " + respuestaToken)
 
     })
 
@@ -229,7 +218,7 @@ app.patch('/user/logout', (req, res) => {
 
 //endpoint que introduce el nombre y la id de la pelicula alquilada y genera las fechas de alquiler y llegada a domicilio
 
-app.post('/user/profile/order', authorization, (req, res) => {
+app.patch('/user/profile/order', authorization, (req, res) => {
 
     let title = new RegExp(req.body.title, "i");
 
@@ -255,7 +244,7 @@ app.post('/user/profile/order', authorization, (req, res) => {
             title: title
         }, (err, movie) => {
             if (err) {
-                return res.send('Ha habido un error')
+                return res.send('Ha habido un error'+err)
             }
             if (!title) {
                 return res.send('La pelicula introducida no existe en la base de datos')
@@ -271,7 +260,7 @@ app.post('/user/profile/order', authorization, (req, res) => {
             
             userValid[0].save((err, saved)=>{
                 if (err){
-                    return res.send('Ha habido un erro al salvar')
+                    return res.send('Ha habido un error al salvar')
                 }
                  res.send('Salvado Correctamente'+saved)
             })
@@ -279,6 +268,40 @@ app.post('/user/profile/order', authorization, (req, res) => {
 
     }).select('username filmRented rentingDate arrivalDate')
 
+})
+
+
+
+app.patch('/user/profile/order/cancel', authorization, (req, res) => {
+
+    const insertedToken = ObjectId(req.headers.authorization)
+    UserModel.find({
+        token: insertedToken
+    }, (err, userValid) => {
+        if (err) {
+
+            return res.send('Ha habido un error'+err)
+        }
+
+        if (!userValid[0]) {
+
+            return res.send('No se ha encontrado el usuario en la base de datos')
+
+        }
+        if (userValid[0].filmRented !== "") {
+           
+            userValid[0].filmRented = ""
+            userValid[0].rentingDate = ""
+            userValid[0].arrivalDate = ""
+            userValid[0].save((err, cancelSaved)=>{
+                if(err){
+                    return res.send("Ha habido un error al cancelar "+err)
+                }
+                 res.send('El pedido ha sido cancelado con exito')
+            });
+            
+        }
+    })
 })
 
 

@@ -10,11 +10,11 @@ GET http://localhost:3001/movie/id/5dcc325de4a8fd83e208c8c0
 
 ###
 
-GET http://localhost:3001/movie/title/vengadores
-
+GET http://localhost:3001/movie/title/laca
 ###
 
-GET http://localhost:3001/movie/genre/action
+GET http://localhost:3001/movie/genre/comedia
+
 
 
 ########################################################
@@ -27,8 +27,8 @@ POST http://localhost:3001/user/register
 Content-Type: application/json
 
 {
-    "username": "manuel",
-    "password":"10234"
+    "username": "andres",
+    "password":"58412"
 }
 
 
@@ -38,8 +38,8 @@ PATCH http://localhost:3001/user/login
 Content-Type: application/json
 
 {
-    "username": "manuel",
-    "password":"10234"
+    "username": "antonio",
+    "password":"58412"
 }
 
 ###
@@ -48,29 +48,43 @@ PATCH http://localhost:3001/user/logout
 Content-Type: application/json
 
 {
-    "username": "manuel",
-    "password":"10234"
+    "username": "antonio",
+    "password":"58412"
 }
 
 ###
 
 GET http://localhost:3001/user/profile
-Authorization: 5dd2bc17e071f501bc70e2c1
-
+Authorization: 5dd5739eba955f1b48c88783
 
 ########################################################
 #                    endPoints pedidos                 #
 ########################################################
 
 
-post http://localhost:3001/user/profile/order
-Authorization: 5dd2bc17e071f501bc70e2c1
+PATCH  http://localhost:3001/user/profile/order
+Authorization: 5dd5739eba955f1b48c88783
 Content-Type: application/json
 
 {
-    "title": "avengers"
+    "title": "terminator"
 }
 
+###
+
+PATCH http://localhost:3001/user/profile/order/cancel
+Authorization: 5dd5739eba955f1b48c88783
+
+
+###
+
+POST  http://localhost:3001/user/profile/views
+Authorization: 5dd5739eba955f1b48c88783
+
+###
+
+POST http://localhost:3001/user/profile/views/vote
+Authorization: 5dd5739eba955f1b48c88783
 
 
 
