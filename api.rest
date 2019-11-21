@@ -27,8 +27,9 @@ POST http://localhost:3001/user/register
 Content-Type: application/json
 
 {
-    "username": "raul",
-    "password":"58412"
+    "username": "maria",
+    "password":"58412",
+    "email": "esteban@gmail.com"
 }
 
 
@@ -38,7 +39,7 @@ PATCH http://localhost:3001/user/login
 Content-Type: application/json
 
 {
-    "username": "antonio",
+    "username": "maria",
     "password":"58412"
 }
 
@@ -48,14 +49,14 @@ PATCH http://localhost:3001/user/logout
 Content-Type: application/json
 
 {
-    "username": "antonio",
+    "username": "esteban",
     "password":"58412"
 }
 
 ###
 
 GET http://localhost:3001/user/profile
-Authorization: 5dd5a8abb3df5d3f30b4a0e5
+Authorization:  5dd6ed4d771286301c937189
 
 ########################################################
 #                    endPoints pedidos                 #
@@ -63,22 +64,22 @@ Authorization: 5dd5a8abb3df5d3f30b4a0e5
 
 
 PATCH  http://localhost:3001/user/profile/order
-Authorization: 5dd5a8abb3df5d3f30b4a0e5
+Authorization:  5dd6ed4d771286301c937189
 Content-Type: application/json
 
 {
-    "title": "terminator"
+    "title": "spiderman"
 }
 
 ###
 
 PATCH http://localhost:3001/user/profile/order/cancel
-Authorization: 5dd5a8abb3df5d3f30b4a0e5
+Authorization: 5dd5bf8104646c3c146decdf
 
 ###
 
-POST  http://localhost:3001/user/profile/views
-Authorization: 5dd5739eba955f1b48c88783
+POST  http://localhost:3001/user/profile/viewed
+Authorization: 5dd5bf8104646c3c146decdf
 
 ###
 

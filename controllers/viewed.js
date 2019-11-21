@@ -1,9 +1,11 @@
+const ObjectId = require('mongodb').ObjectID;
+const MovieModel = require ('../models/Movie')
 const UserModel = require('../models/User');
-const TokenModel = require('../models/token');
-
 
 exports.function = (req, res) => {
 
+    let title = new RegExp(req.body.title, "i");
+  
     const insertedToken = ObjectId(req.headers.authorization)
     UserModel.find({
         token: insertedToken
@@ -18,11 +20,9 @@ exports.function = (req, res) => {
             return res.send('No se ha encontrado el usuario en la base de datos')
   
         }
+        
+        res.status(200).send('Peliculas alquiladas'+userValid[0].viewedFilms)
   
-        res.send(`Bienvenido ${userValid[0].username}, te has logeado con exito
-             
-             ${userValid[0]}`)
-  
-    }).select('username filmRented rentingDate arrivalDate viewedFilm')
+    })
   
   }

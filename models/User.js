@@ -16,6 +16,11 @@ const UserSchema=mongoose.Schema({
         require: true
     },
 
+    email:{
+        type: String,
+        require: true
+    },
+
     login: Boolean,
 
     filmId: objectId,
@@ -24,7 +29,17 @@ const UserSchema=mongoose.Schema({
 
     rentingDate: String,
 
-    arrivalDate: String
+    arrivalDate: String,
+
+    viewedFilms:[{
+        
+        movieRentedId: String,
+
+        movieRentedTitle: String,
+
+        rentingDate: String
+
+    }]
 
 })
 
