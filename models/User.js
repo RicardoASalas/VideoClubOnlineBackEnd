@@ -18,11 +18,14 @@ const UserSchema=mongoose.Schema({
 
     email:{
         type: String,
-        require: true
+        require: true,
+        unique: true,
     },
 
-    login: Boolean,
+    admin: Boolean,
 
+    login: Boolean,
+    
     filmId: objectId,
 
     filmRented: String,

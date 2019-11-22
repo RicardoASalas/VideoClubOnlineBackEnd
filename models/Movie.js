@@ -31,7 +31,7 @@ const MovieSchema = mongoose.Schema({
     },
     vote_average: Number,
     overview: String,
-    release_date: Number
+    release_date: String
 })
 
 const MovieModel = mongoose.model('movie', MovieSchema);

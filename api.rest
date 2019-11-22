@@ -10,10 +10,10 @@ GET http://localhost:3001/movie/id/5dcc325de4a8fd83e208c8c0
 
 ###
 
-GET http://localhost:3001/movie/title/avengers
+GET http://localhost:3001/movie/title/terminator
 ###
 
-GET http://localhost:3001/movie/genre/drama
+GET http://localhost:3001/movie/genre/comedia
 
 
 
@@ -27,9 +27,9 @@ POST http://localhost:3001/user/register
 Content-Type: application/json
 
 {
-    "username": "maria",
-    "password":"58412",
-    "email": "esteban@gmail.com"
+    "username": "azael",
+    "password":"5841d",
+    "email": "manuel@gmail.com"
 }
 
 
@@ -39,24 +39,19 @@ PATCH http://localhost:3001/user/login
 Content-Type: application/json
 
 {
-    "username": "maria",
-    "password":"58412"
+    "username": "pepe",
+    "password":"5841d"
 }
 
 ###
 
 PATCH http://localhost:3001/user/logout
-Content-Type: application/json
-
-{
-    "username": "esteban",
-    "password":"58412"
-}
-
+Authorization: 5dd7e20851956c241c4d5700
 ###
 
 GET http://localhost:3001/user/profile
-Authorization:  5dd6ed4d771286301c937189
+Authorization: 5dd7e20851956c241c4d5700
+
 
 ########################################################
 #                    endPoints pedidos                 #
@@ -68,13 +63,13 @@ Authorization:  5dd6ed4d771286301c937189
 Content-Type: application/json
 
 {
-    "title": "spiderman"
+    "title": "cars"
 }
 
 ###
 
 PATCH http://localhost:3001/user/profile/order/cancel
-Authorization: 5dd5bf8104646c3c146decdf
+Authorization: 5dd6ed4d771286301c937189
 
 ###
 
@@ -86,6 +81,36 @@ Authorization: 5dd5bf8104646c3c146decdf
 POST http://localhost:3001/user/profile/views/vote
 Authorization: 5dd5739eba955f1b48c88783
 
+########################################################
+#                    endPoints admin                   #
+########################################################
+
+
+POST  http://localhost:3001/user/admin/insertFilm
+Authorization:  5dd6ed4d771286301c937189
+###
+
+PATCH  http://localhost:3001/user/admin/removeFilm
+Authorization:  5dd6ed4d771286301c937189
+Content-Type: application/json
+
+{
+    "username": "maria",
+    "password":"58412",
+    "email": "esteban@gmail.com"
+}
+
+###
+
+PATCH   http://localhost:3001/user/admin/setAdmin
+Authorization:   5dd7e37f82af4b2cd819879c
+Content-Type: application/json
+
+{
+    "username": "6",
+    "admin": "true"
+}
+###
 
 
 

@@ -2,10 +2,10 @@ const UserModel = require('../models/User');
 const TokenModel = require('../models/token');
 
 exports.function = (req, res) => {
-    const userExist = req.body.username
+    
+    const insertedToken = ObjectId(req.headers.authorization)
     UserModel.find({
-        username: userExist
-    }, (err, validUser) => {
+        token: insertedToken}, (err, validUser) => {
         if (err) {
             console.log("ha habido un error")
             return res.send("Ha habido un error: " + err)

@@ -23,6 +23,6 @@ exports.function = (req, res) => {
              
              ${userValid[0]}`)
   
-    }).select('username filmRented rentingDate arrivalDate viewedFilm')
+    }).select('username filmRented rentingDate arrivalDate viewedFilm admin')
   
   }

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const authorization = require('../middlewares/authorization');
+const adminPrivileges = require('../middlewares/adminPrivileges');
 
 const register = require ('../controllers/register');
 const login = require ('../controllers/logIn');
@@ -10,6 +11,7 @@ const logout = require ('../controllers/logOut');
 const order = require ('../controllers/order');
 const cancelOrder = require ('../controllers/cancelOrder');
 const viewed = require('../controllers/viewed');
+const setAdmin = require('../controllers/setAdmin')
 
 
 
@@ -41,5 +43,14 @@ router.patch('/profile/order/cancel', authorization, cancelOrder.function);
 //endpoint que permite visualizar todas las peliculas que se han alquilado 
 
 router.get('/profile/viewed', authorization, viewed.function);
+
+////////////////////////ADMIN//////////////////////////////
+
+router.patch('/admin/setAdmin', authorization, adminPrivileges, setAdmin.function);
+
+// router.patch('/profile/order', authorization, order.function);
+
+// router.patch('/profile/order', authorization, order.function);
+
 
 module.exports = router;
