@@ -11,7 +11,10 @@ const logout = require ('../controllers/logOut');
 const order = require ('../controllers/order');
 const cancelOrder = require ('../controllers/cancelOrder');
 const viewed = require('../controllers/viewed');
-const setAdmin = require('../controllers/setAdmin')
+const setAdmin = require('../controllers/setAdmin');
+const insertFilm = require('../controllers/insertFilm');
+const removeFilm = require('../controllers/removeFilm');
+
 
 
 
@@ -48,9 +51,9 @@ router.get('/profile/viewed', authorization, viewed.function);
 
 router.patch('/admin/setAdmin', authorization, adminPrivileges, setAdmin.function);
 
-// router.patch('/profile/order', authorization, order.function);
+router.post('/admin/insertFilm', authorization, adminPrivileges, insertFilm.function);
 
-// router.patch('/profile/order', authorization, order.function);
+router.delete('/admin/removeFilm', authorization, adminPrivileges, removeFilm.function);
 
 
 module.exports = router;

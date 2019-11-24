@@ -5,6 +5,8 @@ exports.function = (req, res) => {
 
     UserModel.findOne({}, (error, userExists) => {
         let firstAdminExists = false
+        validMail = /.+\@.+\..+/
+        longitudPassword = /.{8,}/
         if (error) {
             return console.log(error)
             
@@ -25,6 +27,16 @@ exports.function = (req, res) => {
         newUser.arrivalDate = null
         newUser.admin = firstAdminExists
 
+        if(!validMail.test(req.body.email)){
+
+            return res.send("El email introducido no es un email válido.")
+
+        }
+        if(!longitudPassword.test(req.body.password)){
+
+            return res.send("El password debe contener al menos 8 caractéres o números.")
+
+        }
 
         newUser.save((err, userSaved) => {
             if (err) {

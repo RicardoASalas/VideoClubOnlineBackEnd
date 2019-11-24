@@ -1,0 +1,18 @@
+{
+    "idleHeartbeats": 1574,
+    "navigatingHeartbeats": 606,
+    "totalCodingHeartbeats": 3194,
+    "languageHeartbeats": {
+        "javascript": 2040,
+        "http": 1154
+    },
+    "fileHeartbeats": {
+        "app.js": 114,
+        "models/Movie.js": 21,
+        "api.rest": 1154,
+        "routers/users.js": 201,
+        "controllers/insertFilm.js": 1128,
+        "controllers/removeFilm.js": 198,
+        "controllers/register.js": 378
+    }
+}

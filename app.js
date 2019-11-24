@@ -2,9 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const movieRouter = require('./routers/movies');
 const userRouter = require('./routers/users');
+const cors = require('cors');
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 
 mongoose.connect("/mongodb://localhost:27017/VideoClubOnline", {
         useNewUrlParser: true,
