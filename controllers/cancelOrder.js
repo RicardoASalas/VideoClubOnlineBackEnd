@@ -24,6 +24,7 @@ exports.function = (req, res) => {
             userValid[0].filmRented = ""
             userValid[0].rentingDate = ""
             userValid[0].arrivalDate = ""
+            userValid[0].numberRentingDays= ""
     
             userValid[0].save((err, cancelSaved)=>{
                 if(err){

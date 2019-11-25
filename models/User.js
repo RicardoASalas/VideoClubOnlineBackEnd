@@ -34,6 +34,8 @@ const UserSchema=mongoose.Schema({
 
     arrivalDate: String,
 
+    numberRentingDays: String,
+
     viewedFilms:[{
         
         movieRentedId: String,

@@ -30,7 +30,8 @@ exports.function = (req, res) => {
 
                 movieRentedTitle: movieSearched.title, 
 
-                rentingDate: currentRentingDate 
+                rentingDate: currentRentingDate,
+
             }
 
             UserModel.find( {token: insertedToken} ,(err, userValidDocument) => {
@@ -46,9 +47,9 @@ exports.function = (req, res) => {
                     return res.send('El usuario ya tiene una pelicula alquilada: '+ userValid.filmRented)
                 }
                 
-                 userValid.filmRented = movieSearched.title;
+                 userValid.filmRented = movieSearched.title
                  userValid.filmId = movieSearched._id
-            
+                 userValid.numberRentingDays = req.body.numberRentingDays
                  userValid.rentingDate = currentRentingDate
            
                  const tiempoTransporte = 2

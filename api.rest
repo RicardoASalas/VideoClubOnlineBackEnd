@@ -28,9 +28,9 @@ POST http://localhost:3001/user/register
 Content-Type: application/json
 
 {
-    "username": "manolo",
-    "password":"5841d",
-    "email": "manolo@gmail.com"
+    "username": "maria",
+    "password":"12345678",
+    "email": "manologmail.com"
 }
 
 
@@ -40,7 +40,7 @@ PATCH http://localhost:3001/user/login
 Content-Type: application/json
 
 {
-    "username": "perico",
+    "username": "manolo",
     "password":"5841d"
 }
 
@@ -51,7 +51,7 @@ Authorization: 5dd7e20851956c241c4d5700
 ###
 
 GET http://localhost:3001/user/profile
-Authorization: 5ddaf7aec142b01b68
+Authorization: 5ddaf7e9c142b01b68ef7a08
 ########################################################
 #                    endPoints pedidos                 #
 ########################################################
@@ -62,7 +62,8 @@ Authorization:  5dd7e57031d78316b896d0d4
 Content-Type: application/json
 
 {
-    "title": "terminator"
+    "title": "terminator",
+    "numberRentingDays": "15"
 }
 
 ###
@@ -85,7 +86,7 @@ Authorization: 5dd7e57031d78316b896d0d4
 
 
 POST    http://localhost:3001/user/admin/insertFilm
-Authorization:   5dd7e57031d78316b896d0d4
+Authorization:   5ddaf7e9c142b01b68ef7a08
 Content-Type: application/json
 
 {
@@ -111,11 +112,11 @@ Content-Type: application/json
 ###
 
 PATCH   http://localhost:3001/user/admin/setAdmin
-Authorization:   5dd7e37f82af4b2cd819879c
+Authorization:   5ddaf7e9c142b01b68ef7a08
 Content-Type: application/json
 
 {
-    "username": "6",
+    "username": "perico",
     "admin": "true"
 }
 

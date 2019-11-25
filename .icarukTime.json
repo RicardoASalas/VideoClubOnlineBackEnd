@@ -1,18 +1,23 @@
 {
-    "idleHeartbeats": 1574,
-    "navigatingHeartbeats": 606,
-    "totalCodingHeartbeats": 3194,
+    "idleHeartbeats": 1837,
+    "navigatingHeartbeats": 686,
+    "totalCodingHeartbeats": 3540,
     "languageHeartbeats": {
-        "javascript": 2040,
-        "http": 1154
+        "javascript": 2236,
+        "http": 1294,
+        "plaintext": 10
     },
     "fileHeartbeats": {
         "app.js": 114,
         "models/Movie.js": 21,
-        "api.rest": 1154,
+        "api.rest": 1294,
         "routers/users.js": 201,
         "controllers/insertFilm.js": 1128,
         "controllers/removeFilm.js": 198,
-        "controllers/register.js": 378
+        "controllers/register.js": 388,
+        "c:\\Users\\Richi\\Desktop\\proyecto videoclub online\\backEndVideoCLubOnline\\api.rest.git": 10,
+        "models/User.js": 64,
+        "controllers/order.js": 94,
+        "controllers/cancelOrder.js": 28
     }
 }
