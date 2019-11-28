@@ -29,21 +29,21 @@ exports.function = (req, res) => {
 
         if(!validMail.test(req.body.email)){
 
-            return res.send("El email introducido no es un email válido.")
+            return res.send({mensaje: "El email introducido no es un email válido."})
 
         }
         if(!longitudPassword.test(req.body.password)){
 
-            return res.send("El password debe contener al menos 8 caractéres o números.")
+            return res.send({mensaje: "El password debe contener al menos 8 caractéres o números."})
 
         }
 
         newUser.save((err, userSaved) => {
             if (err) {
 
-                return res.status(400).send("El usuario o email introducido ya existen: "+err)
+                return res.status(400).send({mensaje: "El usuario o email introducido ya existen"})
             }
-            res.status(200).send(userSaved + " ha sido guardado correctamente")
+            res.status(200).send({mensaje: "El usuario ha sido guardado correctamente"})
 
         })
     })
