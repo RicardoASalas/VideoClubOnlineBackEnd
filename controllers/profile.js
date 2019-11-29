@@ -15,14 +15,12 @@ exports.function = (req, res) => {
   
         if (!userValid[0]) {
   
-            return res.send('No se ha encontrado el usuario en la base de datos')
+            return res.send({mensaje: 'No se ha encontrado el usuario en la base de datos'})
   
         }
   
-        res.send(`Bienvenido ${userValid[0].username}, te has logeado con exito
-             
-             ${userValid[0]}`)
+        res.send(userValid[0])
   
-    }).select('username filmRented rentingDate arrivalDate viewedFilm admin')
+    }).select('username filmRented rentingDate arrivalDate viewedFilms admin')
   
   }

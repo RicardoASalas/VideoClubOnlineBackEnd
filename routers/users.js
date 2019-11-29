@@ -31,7 +31,7 @@ router.patch('/login', login.function);
 router.get('/profile', authorization, profile.function );
 
 //endpoint que realiza el log out y borra el token del usuario
-router.patch('/logout', logout.function);
+router.put('/logout', logout.function);
 
 ////////////////////////PEDIDOS//////////////////////////////
 

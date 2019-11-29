@@ -30,7 +30,7 @@ exports.function = (req, res) => {
         validUser[0].login = true
         validUser[0].save()
         respuestaToken = validUser[0].token.toString()
-        res.status(200).send("Login de " + validUser[0].username + " realizado con exito. TOKEN: " + respuestaToken)
+        res.status(200).send({token: respuestaToken })
   
     })
   

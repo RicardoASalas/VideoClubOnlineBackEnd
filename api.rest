@@ -46,7 +46,7 @@ Content-Type: application/json
 
 ###
 
-PATCH http://localhost:3001/user/logout
+PUT  http://localhost:3001/user/logout
 Authorization: 5dd7e20851956c241c4d5700
 ###
 
