@@ -40,7 +40,7 @@ PATCH http://localhost:3001/user/login
 Content-Type: application/json
 
 {
-    "username": "",
+    "username": "antonioymaria",
     "password":"12345678"
 }
 
@@ -51,14 +51,14 @@ Authorization: 5dd7e20851956c241c4d5700
 ###
 
 GET http://localhost:3001/user/profile
-Authorization: 5de0fef0ce96cb1b90a3beb1
+Authorization: 5de421060666f90208073cb3
 ########################################################
 #                    endPoints pedidos                 #
 ########################################################
 
 
 PATCH  http://localhost:3001/user/profile/order
-Authorization:  5de0fef0ce96cb1b90a3beb1
+Authorization:  5de421060666f90208073cb3
 Content-Type: application/json
 
 {
