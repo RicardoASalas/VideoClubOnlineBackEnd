@@ -36,15 +36,17 @@ const UserSchema=mongoose.Schema({
 
     numberRentingDays: String,
 
+    payingAmount: String,
+
     viewedFilms:[{
         
         movieRentedId: String,
 
         movieRentedTitle: String,
 
-        rentingDate: String
+        rentingDate: String,
 
-    }]
+    }]  
 
 })
 

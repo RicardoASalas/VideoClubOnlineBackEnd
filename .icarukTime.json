@@ -1,27 +1,28 @@
 {
-    "idleHeartbeats": 2578,
-    "navigatingHeartbeats": 1211,
-    "totalCodingHeartbeats": 4290,
+    "idleHeartbeats": 3115,
+    "navigatingHeartbeats": 1418,
+    "totalCodingHeartbeats": 5063,
     "languageHeartbeats": {
-        "javascript": 2825,
-        "http": 1435,
-        "plaintext": 30
+        "javascript": 3467,
+        "http": 1556,
+        "plaintext": 40
     },
     "fileHeartbeats": {
         "app.js": 155,
         "models/Movie.js": 21,
-        "api.rest": 1435,
+        "api.rest": 1556,
         "routers/users.js": 250,
         "controllers/insertFilm.js": 1128,
         "controllers/removeFilm.js": 198,
-        "controllers/register.js": 597,
+        "controllers/register.js": 670,
         "c:\\Users\\Richi\\Desktop\\proyecto videoclub online\\backEndVideoCLubOnline\\api.rest.git": 20,
-        "models/User.js": 64,
-        "controllers/order.js": 94,
+        "models/User.js": 137,
+        "controllers/order.js": 467,
         "controllers/cancelOrder.js": 38,
         "c:\\Users\\Richi\\Desktop\\proyecto videoclub online\\backEndVideoCLubOnline\\controllers\\register.js.git": 10,
-        "controllers/logIn.js": 38,
+        "controllers/logIn.js": 122,
         "controllers/logOut.js": 168,
-        "controllers/profile.js": 74
+        "controllers/profile.js": 113,
+        "c:\\Users\\Richi\\Desktop\\proyecto videoclub online\\backEndVideoCLubOnline\\controllers\\profile.js.git": 10
     }
 }

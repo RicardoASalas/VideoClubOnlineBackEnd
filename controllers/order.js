@@ -4,14 +4,14 @@ const UserModel = require('../models/User');
 
 exports.function = (req, res) => {
     
-    let title = new RegExp(req.body.title, "i");
+    let filmId = ObjectId(req.body.id);
 
     const insertedToken = ObjectId(req.headers.authorization)
     
     
   
         MovieModel.find({
-            title: title
+            _id: filmId
         }, (err, movie) => {
             if (err) {
                 return res.send('Ha habido un error'+err)
@@ -44,12 +44,13 @@ exports.function = (req, res) => {
           
                 if (userValid.filmRented !== "") {
                     
-                    return res.send('El usuario ya tiene una pelicula alquilada: '+ userValid.filmRented)
+                    return res.send({mensaje: 'El usuario ya tiene una pelicula alquilada: '})
                 }
                 
                  userValid.filmRented = movieSearched.title
                  userValid.filmId = movieSearched._id
                  userValid.numberRentingDays = req.body.numberRentingDays
+                 userValid.payingAmount = req.body.payingAmount
                  userValid.rentingDate = currentRentingDate
            
                  const tiempoTransporte = 2
@@ -59,7 +60,7 @@ exports.function = (req, res) => {
                      if (err){
                          return res.status(500).send('Ha habido un error al salvar'+err)
                      }
-                      res.status(200).send('Salvado Correctamente: '+ movieSearched.title)
+                      res.status(200).send({mensaje: `Pelicula ${movieSearched.title} alquilada con exito`})
                     })
                 
                     UserModel.findByIdAndUpdate(userValid._id,{$push:{ viewedFilms: objectFilmRented}}, (err, historic) =>{

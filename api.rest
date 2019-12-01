@@ -28,9 +28,9 @@ POST http://localhost:3001/user/register
 Content-Type: application/json
 
 {
-    "username": "maria",
+    "username": "antonioymaria",
     "password":"12345678",
-    "email": "manolo@gmail.com"
+    "email": "mariayantonio@gmail.com"
 }
 
 
@@ -40,7 +40,7 @@ PATCH http://localhost:3001/user/login
 Content-Type: application/json
 
 {
-    "username": "manolo",
+    "username": "",
     "password":"12345678"
 }
 
@@ -51,19 +51,20 @@ Authorization: 5dd7e20851956c241c4d5700
 ###
 
 GET http://localhost:3001/user/profile
-Authorization: 5ddaf7e9c142b01b68ef7a08
+Authorization: 5de0fef0ce96cb1b90a3beb1
 ########################################################
 #                    endPoints pedidos                 #
 ########################################################
 
 
 PATCH  http://localhost:3001/user/profile/order
-Authorization:  5ddb99a96777c71030cf04fb
+Authorization:  5de0fef0ce96cb1b90a3beb1
 Content-Type: application/json
 
 {
-    "title": "terminator",
-    "numberRentingDays": "15"
+    "id": "5dcc325de4a8fd83e208c8c0",
+    "numberRentingDays": "15",
+    "payingAmount": "15"
 }
 
 ###

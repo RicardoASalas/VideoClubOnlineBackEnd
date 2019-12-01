@@ -12,15 +12,15 @@ exports.function = (req, res) => {
             return res.status(500).send("Error. " + err)
         }
         if (!validUser.length) {
-            return res.status(400).send("El usuario introducido no existe")
+            return res.status(200).send({mensaje:"El usuario introducido no existe"})
         }
         if (validUser[0].password !== passwordIsValid) {
-            return res.status(400).send("La contraseña introducida no es correcta")
+            return res.status(200).send({mensaje:"La contraseña introducida no es correcta"})
         }
   
         if (validUser[0].login) {
   
-            return res.status(400).send("Este usuario ya esta logeado.")
+            return res.status(200).send("Este usuario ya esta logeado.")
         }
   
         token = new TokenModel()

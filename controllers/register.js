@@ -25,6 +25,8 @@ exports.function = (req, res) => {
         newUser.filmRented = ""
         newUser.rentingDate = null
         newUser.arrivalDate = null
+        newUser.numberRentingDays = ""
+        payingAmount=""
         newUser.admin = firstAdminExists
 
         if(!validMail.test(req.body.email)){
